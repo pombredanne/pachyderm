@@ -197,7 +197,8 @@ install-bench: install
 run-bench:
 	kubectl scale --replicas=4 deploy/pachd
 	echo "waiting for pachd to scale up" && sleep 15
-	kubectl delete --ignore-not-found po/bench && kubectl run bench --image=pachyderm/bench:`git rev-list HEAD --max-count=1` --image-pull-policy=Always --restart=Never --attach=true -- ./test -test.v -test.bench=BenchmarkDaily -test.run=XXX
+	# kubectl delete --ignore-not-found po/bench && kubectl run bench --image=pachyderm/bench:`git rev-list HEAD --max-count=1` --image-pull-policy=Always --restart=Never --attach=true -- ./test -test.v -test.bench=BenchmarkDaily -test.run=XXX
+	kubectl delete --ignore-not-found po/bench && kubectl run bench --image=pachyderm/bench:`git rev-list HEAD --max-count=1` --image-pull-policy=Always --restart=Never --attach=true -- ./test -test.v # -test.bench=BenchmarkDaily -test.run=XXX
 
 delete-all-launch-bench:
 	etc/testing/deploy/$(BENCH_CLOUD_PROVIDER).sh --delete-all
